@@ -17,15 +17,20 @@ MAX_CHARS = 200
 
 
 def check_roast(text):
-    """The gate wants 1 to 200 characters, one line, not only whitespace."""
+    """The gate wants 1 to 200 characters, one line, not only whitespace.
+
+    Returns the stripped roast: a stray leading or trailing space would
+    count toward the 200 characters and blunt the punchline, so the file
+    holds exactly the joke, nothing around it.
+    """
     stripped = text.strip()
     if not stripped:
         raise ValueError("roast is empty")
-    if len(text) > MAX_CHARS:
-        raise ValueError(f"roast is {len(text)} chars, over {MAX_CHARS}")
-    if "\n" in text or "\r" in text:
+    if len(stripped) > MAX_CHARS:
+        raise ValueError(f"roast is {len(stripped)} chars, over {MAX_CHARS}")
+    if "\n" in stripped or "\r" in stripped:
         raise ValueError("roast must be a single line")
-    return text
+    return stripped
 
 
 def output_path():
